@@ -1,29 +1,65 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const form = document.getElementById("formPeminatan");
-  const errorMsg = document.getElementById("errorMsg");
+document.addEventListener('DOMContentLoaded', () => {
+  const formPeminatan = document.getElementById('formPeminatan');
+  const outputContainer = document.getElementById('outputContainer');
+  const outputNama = document.getElementById('outputNama');
+  const outputNim = document.getElementById('outputNim');
+  const outputAngkatan = document.getElementById('outputAngkatan');
+  const outputTanggalDaftar = document.getElementById('outputTanggalDaftar');
+  const outputPeminatan = document.getElementById('outputPeminatan');
+  const outputAlamat = document.getElementById('outputAlamat');
 
-  form.addEventListener("submit", function (event) {
-    event.preventDefault(); // Mencegah submit default
+  formPeminatan.addEventListener('submit', function(event) {
+    event.preventDefault();
 
-    const nama = document.getElementById("nama").value.trim();
-    const nim = document.getElementById("nim").value.trim();
-    const alamat = document.getElementById("alamat").value.trim();
-    const peminatanRadio = document.querySelector("input[name='peminatan']:checked");
+    const nama = document.getElementById('nama').value.trim();
+    const nim = document.getElementById('nim').value.trim();
+    const angkatan = document.getElementById('angkatan').value;
+    const tanggalDaftar = document.getElementById('tanggalDaftar').value;
+    const alamat = document.getElementById('alamat').value.trim();
+    const selectedPeminatan = document.querySelector('input[name="peminatan"]:checked');
 
-    if (!nama || !nim || !peminatanRadio || !alamat) {
-      errorMsg.textContent = "Semua kolom harus diisi.";
+    // Validasi input
+    if (!nama || !nim || !angkatan || !tanggalDaftar || !alamat || !selectedPeminatan) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Oops!',
+        text: 'Semua kolom harus diisi!',
+        confirmButtonColor: '#6366f1'
+      });
+      outputContainer.style.display = 'none';
       return;
     }
 
-    const peminatan = peminatanRadio.value;
-    errorMsg.textContent = ""; // Clear error
+    if (!/^\d{11}$/.test(nim)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Format NIM Salah!',
+        text: 'NIM harus berupa 11 digit angka.',
+        confirmButtonColor: '#6366f1'
+      });
+      outputContainer.style.display = 'none';
+      return;
+    }
 
-    // Tampilkan hasil
-    alert(
-      `Data Berhasil Dikirim:\n\nNama: ${nama}\nNIM: ${nim}\nPeminatan: ${peminatan}\nAlamat: ${alamat}`
-    );
+    // Jika validasi sukses
+    outputNama.textContent = nama;
+    outputNim.textContent = nim;
+    outputAngkatan.textContent = angkatan;
+    outputTanggalDaftar.textContent = tanggalDaftar;
+    outputPeminatan.textContent = selectedPeminatan.value;
+    outputAlamat.textContent = alamat;
 
-    // Reset form (opsional)
-    form.reset();
+    outputContainer.style.display = 'block';
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Berhasil!',
+      text: 'Data pendaftaran berhasil ditampilkan.',
+      timer: 1500,
+      showConfirmButton: false
+    });
+
+    // Opsional: Reset form setelah submit
+    // formPeminatan.reset();
   });
 });

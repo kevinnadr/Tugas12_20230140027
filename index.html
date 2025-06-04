@@ -56,7 +56,9 @@
     }
 
     input[type="text"],
-    textarea {
+    input[type="date"], /* Tambahkan styling untuk input date */
+    textarea,
+    select { /* Tambahkan styling untuk select */
       width: 100%;
       padding: 12px 14px;
       border: 1px solid #d1d5db;
@@ -66,7 +68,8 @@
     }
 
     input:focus,
-    textarea:focus {
+    textarea:focus,
+    select:focus { /* Tambahkan focus styling untuk select */
       border-color: var(--primary);
       outline: none;
     }
@@ -120,6 +123,31 @@
       text-align: center;
     }
 
+    .output-card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      margin-top: 20px;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .output-card h4 {
+      text-align: center;
+      color: var(--primary-dark);
+      margin-bottom: 15px;
+    }
+
+    .output-card p {
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .output-card p strong {
+      color: var(--primary);
+    }
+
     @media (max-width: 500px) {
       .card {
         padding: 24px;
@@ -136,6 +164,19 @@
 
       <label for="nim">NIM</label>
       <input type="text" id="nim" placeholder="Contoh: 20230140138" />
+
+      <label for="angkatan">Angkatan</label>
+      <select id="angkatan">
+        <option value="">Pilih Angkatan</option>
+        <option value="2020">2020</option>
+        <option value="2021">2021</option>
+        <option value="2022">2022</option>
+        <option value="2023">2023</option>
+        <option value="2024">2024</option>
+      </select>
+
+      <label for="tanggalDaftar">Tanggal Pendaftaran</label>
+      <input type="date" id="tanggalDaftar" />
 
       <label>Peminatan</label>
       <div class="radio-group">
@@ -159,6 +200,16 @@
       <button type="submit">Kirim</button>
       <div id="errorMsg" class="error"></div>
     </form>
+  </div>
+
+  <div id="outputContainer" class="output-card" style="display: none;">
+    <h4>Data Pendaftaran Anda:</h4>
+    <p><strong>Nama:</strong> <span id="outputNama"></span></p>
+    <p><strong>NIM:</strong> <span id="outputNim"></span></p>
+    <p><strong>Angkatan:</strong> <span id="outputAngkatan"></span></p>
+    <p><strong>Tanggal Daftar:</strong> <span id="outputTanggalDaftar"></span></p>
+    <p><strong>Peminatan:</strong> <span id="outputPeminatan"></span></p>
+    <p><strong>Alamat:</strong> <span id="outputAlamat"></span></p>
   </div>
 
   <script src="script.js"></script>
